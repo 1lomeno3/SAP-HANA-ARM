@@ -2,14 +2,17 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "HanaVersion": {
+            "value": "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)"
+        },        
         "VMName": {
-            "value": "HANATestVM2"
+            "value": "HANATestVM"
         },
         "HANAJumpbox": {
             "value": "no"
         },
         "VMSize": {
-            "value": "Standard_M64s (1 TB, Certified)"
+            "value": "Standard_E16s_v3 (128 GB)"
         },
         "NetworkName": {
             "value": "myVNet"
