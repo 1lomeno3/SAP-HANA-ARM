@@ -130,7 +130,7 @@
         "api-version-vm": "2017-12-01",
         "vmPassword": "HANA07061992!",
         "mode": "Push",
-        "baseUri": "https://raw.githubusercontent.com/AzureCAT-GSI/SAP-HANA-ARM/master/",
+        "baseUri": "https://raw.githubusercontent.com/1lomeno3/SAP-HANA-ARM/master/",
         "nicName": "[if(equals(parameters('IPAllocationMethod'),'Static'),concat(parameters('vmName'),'-static'),concat(parameters('vmName'),'-dynamic'))]",
         "subnetRef": "[parameters('HANAsubnetRef')]",
         "OperatingSystemSpec": {
