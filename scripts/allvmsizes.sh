@@ -31,16 +31,17 @@ else
   then
     hanapackage="51052325"
   else
-  echo "not 51052325"
+    echo "not 51052325"
     if [ "$HANAVER" = "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)" ]
     then
       hanapackage="51053061"
     else
+      echo "not 51053061"
       if [ "$HANAVER" = "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)" ]
       then
         hanapackage="51053787"
       else
-        echo "not 51053061, default to 51052325"
+        echo "not 51053787, default to 51052325"
         hanapackage="51052325"
       fi
     fi
@@ -309,28 +310,6 @@ if [ ! -d "/hana/data/sapbits" ]
  mkdir "/hana/data/sapbits"
 fi
 
-HANAVER=${HANAVER^^}
-if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS01 REV 10 (51052030)" ]
-then
-  hanapackage="51052030"
-else
-  echo "not 51052030"
-  if [ "$HANAVER" = "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)" ]
-  then
-    hanapackage="51052325"
-  else
-  echo "not 51052325"
-    if [ "$HANAVER" = "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)" ]
-    then
-      hanapackage="51053061"
-    else
-      echo "not 51053061, default to 51052325"
-      hanapackage="51052325"
-    fi
-  fi
-fi
-
-
 #####################
 SAPBITSDIR="/hana/data/sapbits"
 
@@ -340,7 +319,10 @@ then
   cd $SAPBITSDIR
   mkdir ${hanapackage}
   cd ${hanapackage}
+  
+  echo "hana unzip start" >> /tmp/parameter.txt
   unzip ../${hanapackage}.ZIP
+  echo "hana unzip end" >> /tmp/parameter.txt
   cd $SAPBITSDIR
   #add additional requirement
   zypper install -y libatomic1
@@ -360,8 +342,6 @@ else
 
 fi
 #####################
-
-
 
 #!/bin/bash
 cd /hana/data/sapbits
