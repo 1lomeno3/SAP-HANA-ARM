@@ -3,22 +3,22 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "VMName": {
-            "value": "testVm"
+            "value": "HANATestVM2"
         },
         "HANAJumpbox": {
-            "value": "yes"
+            "value": "no"
         },
         "VMSize": {
-            "value": "Standard_GS5 (448 GB, Certified)"
+            "value": "Standard_M64s (1 TB, Certified)"
         },
         "NetworkName": {
-            "value": "ra-sap-hana-vnet"
+            "value": "myVNet"
         },
         "addressPrefixes": {
             "value": "10.0.0.0/16"
         },
         "HANASubnetName": {
-            "value": "SAPDataSubnet"
+            "value": "defaultsubnet"
         },
         "HANASubnetPrefix": {
             "value": "10.0.5.0/24"
@@ -30,14 +30,14 @@
             "value": "10.0.6.0/24"
         },
         "customURI": {
-            "value": "https://yourblobname.blob.core.windows.net/yourContainerName"            
+            "value": "https://mysapstorageaccount.blob.core.windows.net/sapmedia"            
         },
         "VMUserName": {
-            "value": "testuser"
+            "value": "jatretin"
         },
         "VMPassword": {
-            "value": "YourPassword"
-                        },                    
+            "value": "StHF.t34ERTaa"
+        },                    
         "OperatingSystem": {
             "value":  "SLES for SAP 12 SP3"
         },
@@ -48,10 +48,10 @@
             "value": "00"
         },
         "ExistingNetworkResourceGroup": {
-            "value": "no"
+            "value": "mySAPRG"
         },
         "IPAllocationMethod": {
-            "value": "Static"
+            "value": "Dynamic"
         },
         "StaticIP": {
           "value":  "10.0.5.4"
