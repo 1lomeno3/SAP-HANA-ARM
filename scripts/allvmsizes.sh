@@ -305,59 +305,47 @@ echo "/dev/mapper/backupvg-backuplv /hana/backup xfs defaults 0 0" >> /etc/fstab
 echo "/dev/mapper/usrsapvg-usrsaplv /usr/sap xfs defaults 0 0" >> /etc/fstab
 echo "write to fstab end" >> /tmp/parameter.txt
 
-if [ ! -d "/hana/data/sapbits" ]
+SAPBITSDIR="/hana/data/sapbits"
+
+if [ ! -d $SAPBITSDIR ]
  then
- mkdir "/hana/data/sapbits"
+ mkdir $SAPBITSDIR
 fi
 
-#####################
-SAPBITSDIR="/hana/data/sapbits"
+cd $SAPBITSDIR
 
 if [ "${hanapackage}" = "51053787" ]
 then 
-  /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}.ZIP
-  cd $SAPBITSDIR
   mkdir ${hanapackage}
   cd ${hanapackage}
+  echo "hana download start" >> /tmp/parameter.txt
+  /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}.ZIP
+  echo "hana download end" >> /tmp/parameter.txt
   
   echo "hana unzip start" >> /tmp/parameter.txt
-  unzip ../${hanapackage}.ZIP
+  unzip ${hanapackage}.ZIP
   echo "hana unzip end" >> /tmp/parameter.txt
-  cd $SAPBITSDIR
-  #add additional requirement
-  zypper install -y libatomic1
 else
-  cd /hana/data/sapbits
+  echo "hana download start" >> /tmp/parameter.txt
   /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part1.exe
   /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part2.rar
   /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part3.rar
   /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part4.rar
-  cd $SAPBITSDIR
-
+  echo "hana download end" >> /tmp/parameter.txt
+  
   echo "hana unrar start" >> /tmp/parameter.txt
-  #!/bin/bash
-  cd $SAPBITSDIR
   unrar  -o- x ${hanapackage}_part1.exe
   echo "hana unrar end" >> /tmp/parameter.txt
 
 fi
 #####################
 
-#!/bin/bash
-cd /hana/data/sapbits
-echo "hana download start" >> /tmp/parameter.txt
+cd $SAPBITSDIR
 /usr/bin/wget --quiet $Uri/SapBits/md5sums
 /usr/bin/wget --quiet "https://raw.githubusercontent.com/AzureCAT-GSI/SAP-HANA-ARM/master/hdbinst.cfg"
-echo "hana download end" >> /tmp/parameter.txt
 
 date >> /tmp/testdate
-cd /hana/data/sapbits
-
 echo "hana prepare start" >> /tmp/parameter.txt
-cd /hana/data/sapbits
-
-#!/bin/bash
-cd /hana/data/sapbits
 myhost=`hostname`
 sedcmd="s/REPLACE-WITH-HOSTNAME/$myhost/g"
 sedcmd2="s/\/hana\/shared\/sapbits\/51052325/\/hana\/data\/sapbits\/${hanapackage}/g"
@@ -366,7 +354,7 @@ sedcmd4="s/AweS0me@PW/$HANAPWD/g"
 sedcmd5="s/sid=H10/sid=$HANASID/g"
 sedcmd6="s/number=00/number=$HANANUMBER/g"
 cat hdbinst.cfg | sed $sedcmd | sed $sedcmd2 | sed $sedcmd3 | sed $sedcmd4 | sed $sedcmd5 | sed $sedcmd6 > hdbinst-local.cfg
-echo "hana preapre end" >> /tmp/parameter.txt
+echo "hana prepare end" >> /tmp/parameter.txt
 
 #put host entry in hosts file using instance metadata api
 VMIPADDR=`curl -H Metadata:true "http://169.254.169.254/metadata/instance/network/interface/0/ipv4/ipAddress/0/privateIpAddress?api-version=2017-08-01&format=text"`
@@ -380,3 +368,5 @@ echo "install hana start" >> /tmp/parameter.txt
 cd /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64
 /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
 echo "install hana end" >> /tmp/parameter.txt
+
+exit
