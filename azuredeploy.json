@@ -7,7 +7,7 @@
             "metadata": {
                 "description": "Version of HANA"
             },
-            "defaultValue": "SAP HANA Platform Edition 2.0 SPS02 (51052325)",
+            "defaultValue": "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)",
             "allowedValues": [
                 "SAP HANA PLATFORM EDITION 2.0 SPS01 REV 10 (51052030)",
                 "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)",

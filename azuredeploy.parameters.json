@@ -6,13 +6,13 @@
             "value": "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)"
         },        
         "VMName": {
-            "value": "S4IDES"
+            "value": "hanaarm"
         },
         "HANAJumpbox": {
             "value": "no"
         },
         "VMSize": {
-            "value": "Standard_E32s_v3 (256 GB)"
+            "value": "Standard_M64s (1 TB, Certified)"
         },
         "NetworkName": {
             "value": "myVNet"

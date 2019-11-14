@@ -369,4 +369,18 @@ cd /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64
 /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
 echo "install hana end" >> /tmp/parameter.txt
 
+# Azure backup
+echo ""${HANASID,,}"adm ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+cd /tmp
+/usr/bin/wget --quiet $Uri/SapBits/HANABackup/PreRegistrationScript_unattend.py
+/usr/bin/wget --quiet $Uri/SapBits/HANABackup/answerfile.json
+
+sedcmd="s/HESLOtoREPLACE/$HANAPWD/g"
+sedcmd2="s/00/$HANANUMBER/g"
+sedcmd3="s/JLT/$HANASID/g"
+cat answerfile.json | sed $sedcmd | sed $sedcmd2 | sed $sedcmd3 > answerfile-local.json
+
+python PreRegistrationScript_unattend.py -u -f answerfile-local.json
+
 exit
