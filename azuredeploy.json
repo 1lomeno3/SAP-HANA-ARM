@@ -1,5 +1,5 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "HanaVersion": { 
@@ -20,24 +20,26 @@
             "maxLength": 13,
             "metadata": {
                 "description": "VM Name"
-            }
+            },
+            "defaultValue": "HANAARMtest"
         },
         "HANAJumpbox": {
             "type": "string",
             "metadata": {
                 "description": "Choose whether to deploy a VM with HANA Studio installed"
             },
+            "defaultValue": "no",
             "allowedValues": [
                 "yes",
                 "no"
-            ]
+            ]            
         },
         "VMSize": {
             "type": "string",
             "metadata": {
                 "description": "VM Size"
             },
-            "defaultValue": "Standard_GS5 (448 GB, Certified)",
+            "defaultValue": "Standard_E32s_v3 (256 GB)",
             "allowedValues": [
                 "Standard_GS5 (448 GB, Certified)",
                 "Standard_M64s (1 TB, Certified)",
@@ -52,7 +54,7 @@
         },   
         "NetworkName": {
             "type": "string",
-            "defaultValue": "ra-sap-hana-vnet",
+            "defaultValue": "myVNet",
             "metadata": {
                 "description": "The HANA VNET"
             }
@@ -66,7 +68,7 @@
         },
         "HANASubnetName": {
             "type": "string",
-            "defaultValue": "SAPDataSubnet",
+            "defaultValue": "defaultsubnet",
             "metadata": {
                 "description": "The data subnet name"
             }
@@ -96,20 +98,22 @@
             "type": "string",
             "metadata": {
                 "description": "URI where SAP bits are uploaded"
-            }
+            },
+            "defaultValue": "https://mysapstorageaccount.blob.core.windows.net/sapmedia"
         },
         "VMUserName": {
             "type": "string",
             "metadata": {
                 "description": "Username for the Virtual Machine"
             },
-            "defaultValue": "testuser"
+            "defaultValue": "jatretin"
         },
         "VMPassword": {
             "type": "securestring",
             "metadata": {
                 "description": "Password for the Virtual Machine"
-            }
+            },
+            "defaultValue": "StHF.t34ERTaa"
         },
         "OperatingSystem": {
             "type": "string",
@@ -128,7 +132,7 @@
             "metadata": {
                 "description": "SAP HANA System ID"
             },
-            "defaultValue": "H10"
+            "defaultValue": "AZR"
         },
         "HANANumber": {
             "type": "string",
@@ -142,7 +146,7 @@
             "metadata": {
                 "description": "Type in the name of the Resource Group for an existing network or leave no to use the same one"
             },
-            "defaultValue": "no"
+            "defaultValue": "mySAPRG"
         },
         "IPAllocationMethod": {
             "type": "string",
