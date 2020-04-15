@@ -370,18 +370,20 @@ cd /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64
 /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
 echo "install hana end" >> /tmp/parameter.txt
 
+
 # Azure backup
-echo ""${HANASID,,}"adm ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 cd /tmp
-/usr/bin/wget --quiet $Uri/SapBits/HANABackup/PreRegistrationScript_unattend.py
-/usr/bin/wget --quiet $Uri/SapBits/HANABackup/answerfile.json
 
-sedcmd="s/HESLOtoREPLACE/$HANAPWD/g"
-sedcmd2="s/00/$HANANUMBER/g"
-sedcmd3="s/JLT/$HANASID/g"
-cat answerfile.json | sed $sedcmd | sed $sedcmd2 | sed $sedcmd3 > answerfile-local.json
+/usr/bin/wget --quiet -O backupscript.sh https://aka.ms/ScriptForPermsOnHANA?clcid=0x0409
+chmod 777 backupscript.sh
 
-python PreRegistrationScript_unattend.py -u -f answerfile-local.json
+SIDADM=${HANASID,,}adm
+SYSTEMDB=${HANASID}SYSTEMDB
+HANAPORT=3${HANANUMBER}13
+
+su - $SIDADM -c "hdbuserstore set $SYSTEMDB localhost:$HANAPORT SYSTEM $HANAPWD"
+
+/tmp/backupscript.sh -sk $SYSTEMDB
 
 exit
