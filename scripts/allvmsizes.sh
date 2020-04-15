@@ -405,6 +405,7 @@ function enableBackup()
 
   su - $SIDADM -c "hdbuserstore set $SYSTEMDB localhost:$HANAPORT SYSTEM $HANAPWD"
 
+  # it will restart waagent :(
   # /tmp/backupscript.sh -sk $SYSTEMDB
 
   log "enableBackup done"
