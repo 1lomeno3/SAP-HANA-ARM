@@ -69,6 +69,11 @@ function installPackages()
 {
   log "installPackages start"
 
+  # to handle issues with SMT registration:
+  rm /etc/SUSEConnect
+  rm -f /etc/zypp/{repos,services,credentials}.d/*
+  rm -f /usr/lib/zypp/plugins/services/*
+  sed -i '/^# Added by SMT reg/,+1d' /etc/hosts
   /usr/sbin/registercloudguest --force-new
   
   zypper install -y glibc-2.22-51.6
