@@ -416,7 +416,6 @@ function enableBackup()
 # ### MAIN ### #
 ################
 
-log $@
 log "custom script start"
 
 setEnv
