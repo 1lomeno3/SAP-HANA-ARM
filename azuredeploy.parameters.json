@@ -42,7 +42,7 @@
             "value": "StHF.t34ERTaa"
         },                    
         "OperatingSystem": {
-            "value":  "SLES for SAP 12 SP3"
+            "value":  "SLES for SAP 12 SP5"
         },
         "HANASID": {
             "value":  "JLT"
