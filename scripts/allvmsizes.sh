@@ -35,38 +35,14 @@ function setEnv()
 
   #decode hana version parameter
   HANAVER=${HANAVER^^}
-  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS01 REV 10 (51052030)" ]
-  then
-    hanapackage="51052030"
-  else
-    echo "not 51052030"
-    if [ "$HANAVER" = "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)" ]
-    then
-      hanapackage="51052325"
-    else
-      echo "not 51052325"
-      if [ "$HANAVER" = "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)" ]
-      then
-        hanapackage="51053061"
-      else
-        echo "not 51053061"
-        if [ "$HANAVER" = "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)" ]
-        then
-          hanapackage="51053787"
-        else
-          echo "not 51053787"
-          if [ "$HANAVER" = "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52" ]
-          then
-             hanapackage="SPS52"
-          else
-            echo "not 51053787, default to 51052325"
-            hanapackage="51052325"
-          fi
-        fi
-      fi
-    fi
-  fi
+  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS01 REV 10 (51052030)" ]; then hanapackage="51052030"; fi
+  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)" ]; then hanapackage="51052325"; fi
+  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)" ]; then hanapackage="51053061"; fi
+  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)" ]; then hanapackage="51053787"; fi
+  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52" ]; then hanapackage="SPS52"; fi
 
+  echo $HANAVER; echo $hanapackage
+    
   #get the VM size via the instance api
   VMSIZE=`curl -H Metadata:true "http://169.254.169.254/metadata/instance/compute/vmSize?api-version=2017-08-01&format=text"`
 }
@@ -213,7 +189,7 @@ function createVolumes()
     STRIPESIZE=32
     lvcreate -i$PHYSVOLUMES -I$STRIPESIZE -l 100%FREE -n loglv logvg
     mount -t xfs /dev/logvg/loglv /hana/log 
-  echo "/dev/mapper/logvg-loglv /hana/log xfs defaults 0 0" >> /etc/fstab
+    echo "/dev/mapper/logvg-loglv /hana/log xfs defaults 0 0" >> /etc/fstab
 
     mkfs.xfs /dev/datavg/datalv
     mkfs.xfs /dev/logvg/loglv
@@ -265,7 +241,7 @@ function createVolumes()
     STRIPESIZE=32
     lvcreate -i$PHYSVOLUMES -I$STRIPESIZE -l 100%FREE -n loglv logvg
     mount -t xfs /dev/logvg/loglv /hana/log   
-  echo "/dev/mapper/logvg-loglv /hana/log xfs defaults 0 0" >> /etc/fstab
+    echo "/dev/mapper/logvg-loglv /hana/log xfs defaults 0 0" >> /etc/fstab
 
     mkfs.xfs /dev/datavg/datalv
     mkfs.xfs /dev/logvg/loglv
@@ -333,7 +309,7 @@ function createVolumes()
   mount -t xfs /dev/backupvg/backuplv /hana/backup 
   mount -t xfs /dev/usrsapvg/usrsaplv /usr/sap
   mount -t xfs /dev/datavg/datalv /hana/data
-
+  mount -t xfs /dev/logvg/loglv /hana/log 
 
   echo "/dev/mapper/datavg-datalv /hana/data xfs defaults 0 0" >> /etc/fstab
   echo "/dev/mapper/sharedvg-sharedlv /hana/shared xfs defaults 0 0" >> /etc/fstab
@@ -413,7 +389,7 @@ function installHANA()
     # cd /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64
     /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
   fi
-  
+
   log "installHANA done"
 }
 
