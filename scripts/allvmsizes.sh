@@ -25,8 +25,6 @@ function log()
 
 function setEnv()
 {
-  echo $HANAVER; echo $HANASID
-
   #if needed, register the machine
   if [ "$SUBEMAIL" != "" ]; then
     if [ "$SUBURL" != "" ]; then 
@@ -44,12 +42,9 @@ function setEnv()
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)" ]; then hanapackage="51053787"; fi
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52" ]; then hanapackage="SPS52"; fi
 
-  echo $HANAVER; echo $hanapackage
-    
+   
   #get the VM size via the instance api
   VMSIZE=`curl -H Metadata:true "http://169.254.169.254/metadata/instance/compute/vmSize?api-version=2017-08-01&format=text"`
-
-  echo $VMSIZE
 }
 
 function installPackages()
