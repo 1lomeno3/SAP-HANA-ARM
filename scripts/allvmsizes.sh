@@ -24,6 +24,8 @@ function setEnv()
   SUBID=${9}
   SUBURL=${10}
 
+  echo $HANAVER; echo $HANASID
+
   #if needed, register the machine
   if [ "$SUBEMAIL" != "" ]; then
     if [ "$SUBURL" != "" ]; then 
@@ -347,6 +349,7 @@ function prepareSAPBins()
       /usr/bin/wget --quiet $Uri/SapBits/IMDB_SERVER20_052_0-80002031.SAR
       chmod 777 SAPCAR
       ./SAPCAR -xvf IMDB_SERVER20_052_0-80002031.SAR
+      ./SAPCAR -xvf IMDB_SERVER20_052_0-80002031.SAR SIGNATURE.SMF -manifest SIGNATURE.SMF
     else
       /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part1.exe
       /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part2.rar
@@ -365,11 +368,11 @@ function installHANA()
 
   cd $SAPBITSDIR
   /usr/bin/wget --quiet $Uri/SapBits/md5sums
-  /usr/bin/wget --quiet "https://raw.githubusercontent.com/AzureCAT-GSI/SAP-HANA-ARM/master/hdbinst.cfg"
+  /usr/bin/wget --quiet "https://raw.githubusercontent.com/1lomeno3/SAP-HANA-ARM/master/hdbinst.cfg"
 
   myhost=`hostname`
   sedcmd1="s/REPLACE-WITH-HOSTNAME/$myhost/g"
-  sedcmd2="s/\/hana\/shared\/sapbits\/51052325/\/hana\/data\/sapbits\/${hanapackage}/g"
+  #sedcmd2="s/\/hana\/shared\/sapbits\/51052325/\/hana\/data\/sapbits\/${hanapackage}/g"
   sedcmd3="s/root_user=root/root_user=$HANAUSR/g"
   sedcmd4="s/AweS0me@PW/$HANAPWD/g"
   sedcmd5="s/sid=H10/sid=$HANASID/g"
