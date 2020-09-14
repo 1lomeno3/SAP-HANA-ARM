@@ -1,20 +1,21 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "HanaVersion": {
+        "HanaVersion": { 
             "type": "string",
             "metadata": {
                 "description": "Version of HANA"
             },
-            "defaultValue": "SAP HANA Platform Edition 2.0 SPS02 (51052325)",
+            "defaultValue": "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52",
             "allowedValues": [
                 "SAP HANA PLATFORM EDITION 2.0 SPS01 REV 10 (51052030)",
                 "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)",
                 "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)",
-                "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)"
+                "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)",
+                "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52"
             ]
-        },   
+        },
         "vmName": {
             "type": "string",
             "metadata": {
@@ -38,7 +39,7 @@
             "metadata": {
                 "description": "Operating system for HANA Machine"
             },
-            "defaultValue": "SLES for SAP 12 SP5",
+            "defaultValue": "SLES for SAP 15 SP1",
             "allowedValues": [
                 "SLES for SAP 12 SP5",
 		        "SLES for SAP 15 SP1",

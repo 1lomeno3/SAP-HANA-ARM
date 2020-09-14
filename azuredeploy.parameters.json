@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "HanaVersion": {
-            "value": "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)"
+            "value": "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52"
         },        
         "VMName": {
             "value": "hanaarm"

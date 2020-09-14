@@ -54,8 +54,14 @@ function setEnv()
         then
           hanapackage="51053787"
         else
-          echo "not 51053787, default to 51052325"
-          hanapackage="51052325"
+          echo "not 51053787"
+          if [ "$HANAVER" = "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52" ]
+          then
+             hanapackage="SPS52"
+          else
+            echo "not 51053787, default to 51052325"
+            hanapackage="51052325"
+          fi
         fi
       fi
     fi
@@ -357,11 +363,21 @@ function prepareSAPBins()
     /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}.ZIP
     unzip ${hanapackage}.ZIP
   else
-    /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part1.exe
-    /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part2.rar
-    /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part3.rar
-    /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part4.rar
-    unrar  -o- x ${hanapackage}_part1.exe
+    if [ "${hanapackage}" = "SPS52" ]
+    then
+      mkdir ${hanapackage}
+      cd ${hanapackage}
+      /usr/bin/wget --quiet $Uri/SapBits/SAPCAR
+      /usr/bin/wget --quiet $Uri/SapBits/IMDB_SERVER20_052_0-80002031.SAR
+      chmod 777 SAPCAR
+      ./SAPCAR -xvf IMDB_SERVER20_052_0-80002031.SAR
+    else
+      /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part1.exe
+      /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part2.rar
+      /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part3.rar
+      /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part4.rar
+      unrar  -o- x ${hanapackage}_part1.exe
+    fi
   fi
 
   log "prepareSAPBins done"
@@ -390,8 +406,12 @@ function installHANA()
   
   echo $VMIPADDR $VMNAME >> /etc/hosts
   
-  cd /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64
-  /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
+  if [ "${hanapackage}" = "SPS52" ]
+  then
+    /hana/data/sapbits/${hanapackage}/SAP_HANA_DATABASE/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
+  else
+    # cd /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64
+    /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
 
   log "installHANA done"
 }

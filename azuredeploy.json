@@ -7,14 +7,15 @@
             "metadata": {
                 "description": "Version of HANA"
             },
-            "defaultValue": "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)",
+            "defaultValue": "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52",
             "allowedValues": [
                 "SAP HANA PLATFORM EDITION 2.0 SPS01 REV 10 (51052030)",
                 "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)",
                 "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)",
-                "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)"
+                "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)",
+                "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52"
             ]
-        },   
+        },
         "VMName": {
             "type": "string",
             "maxLength": 13,
@@ -120,7 +121,7 @@
             "metadata": {
                 "description": "Operating system for HANA Machine"
             },
-            "defaultValue": "SLES for SAP 12 SP5",
+            "defaultValue": "SLES for SAP 15 SP1",
             "allowedValues": [
                 "SLES for SAP 12 SP5",
 		        "SLES for SAP 15 SP1",
