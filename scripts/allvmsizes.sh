@@ -412,7 +412,8 @@ function installHANA()
   else
     # cd /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64
     /hana/data/sapbits/${hanapackage}/DATA_UNITS/HDB_LCM_LINUX_X86_64/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
-
+  fi
+  
   log "installHANA done"
 }
 
