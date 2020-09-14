@@ -3,6 +3,18 @@
 # update OS, create all hana partitions depending on input parameter from ARM template and install SAP HANA
 # cat customscript.sh | base64 -w0
 #
+set -x
+
+Uri=${1}
+HANAVER=${2}
+HANAUSR=${3}
+HANAPWD=${4}
+HANASID=${5}
+HANANUMBER=${6}
+vmSize=${7}
+SUBEMAIL=${8}
+SUBID=${9}
+SUBURL=${10}
 
 function log()
 {
@@ -13,17 +25,6 @@ function log()
 
 function setEnv()
 {
-  Uri=${1}
-  HANAVER=${2}
-  HANAUSR=${3}
-  HANAPWD=${4}
-  HANASID=${5}
-  HANANUMBER=${6}
-  vmSize=${7}
-  SUBEMAIL=${8}
-  SUBID=${9}
-  SUBURL=${10}
-
   echo $HANAVER; echo $HANASID
 
   #if needed, register the machine
@@ -47,6 +48,8 @@ function setEnv()
     
   #get the VM size via the instance api
   VMSIZE=`curl -H Metadata:true "http://169.254.169.254/metadata/instance/compute/vmSize?api-version=2017-08-01&format=text"`
+
+  echo $VMSIZE
 }
 
 function installPackages()
