@@ -1,5 +1,5 @@
 # SAP HANA ARM Installation
-This ARM template is used to install SAP HANA on a single VM running SUSE SLES 12 SP 3 or SLES 12 SP 2.  For documentation on deploying a cluster of linux machines running HANA System Replication and Linux High Availability Extension, please see documentation here: [cluster deployment](https://github.com/AzureCAT-GSI/SAP-HANA-ARM/blob/master/README-HSR.md). 
+This ARM template is used to install SAP HANA on a single VM running SUSE SLES 12 SP 5 or SLES 15 SP 1.  For documentation on deploying a cluster of linux machines running HANA System Replication and Linux High Availability Extension, please see documentation here: [cluster deployment](https://github.com/AzureCAT-GSI/SAP-HANA-ARM/blob/master/README-HSR.md). 
 
 This template uses the Linux SKU for SAP. **We will be adding additional SKUs and Linux flavors in future Versions.** The template takes advantage of [Custom Script Extensions](https://github.com/Azure/azure-linux-extensions/tree/master/CustomScript) for the installation and configuration of the machine. This should be used only for demonstration and sandbox environments. This is not a production deployment.
 
@@ -31,6 +31,7 @@ Installation media for SAP HANA should be downloaded and placed in the SapBits f
 51053061_part3.rar
 51053061_part4.rar
 ```
+Since HANA 2.0 SPS5 you can use just the single SAR DB package instead of donwloading installation (outdated) media.
 
 Addtionally, if you wish to install a Windows-based Jumpbox with HANA Studio enabled, create a SAP_HANA_STUDIO folder under your SapBits folder and place the following packages:
 ```
@@ -111,23 +112,4 @@ Static IP | No | Allows you to choose the specific IP to be assgined to the HANA
 Subscription Email | No | OS subscription email for BYOS. Leave blank for pay-as-you-go OS image. |  | No restrictions
 Subscription ID | No | OS ID or password for BYOS. Leave blank for pay-as-you-go OS image. |  | No restrictions
 SMT Uri | No | The URI to a subscription management server if used, blank otherwise |  | No restrictions
-
-## Known issues
-### When clicking on Deploy to Azure you get redirected to an empty directory
-![Directories](https://github.com/AzureCAT-GSI/SAP-HANA-ARM/blob/master/media/directories.png)
-
-The only way to get around this is to save the template to your own template library. Click on "Create a Resource" and choose "Template Deployment". Click "Create".
-
-![Directories2](https://github.com/AzureCAT-GSI/SAP-HANA-ARM/blob/master/media/directories2.png)
-
-Select the option of "Build your own template in the editor"
-
-![Directories3](https://github.com/AzureCAT-GSI/SAP-HANA-ARM/blob/master/media/directories3.png)
-
-Copy the contents from the azuredeploy.json [file](https://raw.githubusercontent.com/AzureCAT-GSI/SAP-HANA-ARM/master/azuredeploy.json) and paste them into the template editor, click Save.
-
-![Directories4](https://github.com/AzureCAT-GSI/SAP-HANA-ARM/blob/master/media/directories4.png)
-
-The template is now available in your template library. Changes made to the github repo will not be replicated, make sure to update your template when changes to the azuredeploy.json file are made.
-
 
