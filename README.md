@@ -65,22 +65,22 @@ To deploy from the portal using a graphic interface you can use the [![Deploy to
 ### Deploy from Powershell
 
 ```powershell
-New-AzureRmResourceGroup -Name HANADeploymentRG -Location "Central US"
+New-AzureRmResourceGroup -Name HANADeploymentRG -Location westeurope
 New-AzureRmResourceGroupDeployment -Name HANADeployment -ResourceGroupName HANADeploymentRG `
   -TemplateUri https://raw.githubusercontent.com/1lomeno3/SAP-HANA-ARM/master/azuredeploy.json `
-  -VMName HANAtestVM -HANAJumpbox yes -CustomURI https://yourBlobName.blob.core.windows.net/yourContainerName -VMPassword AweS0me@PW
+  -VMName HANAtestVM -HANAJumpbox no -CustomURI https://yourBlobName.blob.core.windows.net/yourContainerName -VMPassword AweS0me@PW
 ```
 
 ### Deploy from CLI
 ```
 az login
 
-az group create --name HANADeploymentRG --location "Central US"
+az group create --name HANADeploymentRG --location westeurope"
 az group deployment create \
     --name HANADeployment \
     --resource-group HANADeploymentRG \
     --template-uri "https://raw.githubusercontent.com/1lomeno3/SAP-HANA-ARM/master/azuredeploy.json" \
-    --parameters VMName=HANAtestVM HANAJumpbox=yes CustomURI=https://yourBlobName.blob.core.windows.net/yourContainerName VMPassword=AweS0me@PW
+    --parameters VMName=HANAtestVM HANAJumpbox=no CustomURI=https://yourBlobName.blob.core.windows.net/yourContainerName VMPassword=AweS0me@PW
 ```
 ## Monitoring
 
