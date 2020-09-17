@@ -39,8 +39,13 @@
             "value": "jatretin"
         },
         "VMPassword": {
-            "value": "StHF.t34ERTaa"
-        },                    
+            "reference": {
+                "keyVault": {
+                "id": "/subscriptions/53495674-8c17-4e58-97e8-a0b0a0ba659d/resourceGroups/mySAPRG/providers/Microsoft.KeyVault/vaults/mySAPKeyVault"
+                },
+                "secretName": "myVMPassword"
+              }
+        },
         "OperatingSystem": {
             "value":  "SLES for SAP 15 SP1"
         },
