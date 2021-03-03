@@ -13,7 +13,7 @@
                 "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)",
                 "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)",
                 "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)",
-                "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52"
+                "SAP HANA PLATFORM EDITION 2.0 SPS05 REV53"
             ]
         },
         "vmName": {
@@ -39,10 +39,10 @@
             "metadata": {
                 "description": "Operating system for HANA Machine"
             },
-            "defaultValue": "SLES for SAP 15 SP1",
+            "defaultValue": "SLES for SAP 15 SP2",
             "allowedValues": [
                 "SLES for SAP 12 SP5",
-		        "SLES for SAP 15 SP1",
+		        "SLES for SAP 15 SP2",
                 "RHEL 7.2 for SAP HANA - not working yet"
             ]
         },
@@ -127,49 +127,49 @@
         }
     },
     "variables": {
-        "api-version": "2017-06-01",
-        "api-version-vm": "2017-12-01",
+        "api-version": "2020-09-30",
+        "api-version-vm": "2020-06-01",
         "mode": "Push",
         "baseUri": "https://raw.githubusercontent.com/1lomeno3/SAP-HANA-ARM/master/",
         "nicName": "[if (equals(parameters('IPAllocationMethod'),'Static'), concat(parameters('vmName'),'-static'), concat(parameters('vmName'),'-dynamic'))]",
         "subnetRef": "[parameters('HANASubnetRef')]",
         "OperatingSystemSpec": {
             "imagePublisher": "[if (contains(parameters('OperatingSystem'),'SLES'),'SUSE','RedHat')]",
-            "imageOffer": "[if (contains(parameters('OperatingSystem'),'SLES'),if (contains(parameters('OperatingSystem'),'SP5'),'sles-sap-12-sp5','sles-sap-15-sp1'),'RHEL-SAP-HANA')]",
+            "imageOffer": "[if (contains(parameters('OperatingSystem'),'SLES'),if (contains(parameters('OperatingSystem'),'SP5'),'sles-sap-12-sp5','sles-sap-15-sp2'),'RHEL-SAP-HANA')]",
             "sku": "gen2"
         },
         "diskConfig": "[variables(concat('diskConfig_', parameters('vmSize')))]",
         "diskConfig_Standard_E16s_v3": {
-            "shared": 511,
-            "sap": 63,
-            "backup": 255,
-            "data1": 511,
-            "data2": 511,
-            "data3": 511
+            "shared": 512,
+            "sap": 64,
+            "backup": 256,
+            "data1": 512,
+            "data2": 512,
+            "data3": 512
         },
         "diskConfig_Standard_E32s_v3": {
-            "shared": 511,
-            "sap": 63,
-            "backup": 511,
-            "data1": 511,
-            "data2": 511,
-            "data3": 511
+            "shared": 512,
+            "sap": 64,
+            "backup": 512,
+            "data1": 512,
+            "data2": 512,
+            "data3": 512
         },
         "diskConfig_Standard_E64s_v3": {
-            "shared": 511,
-            "sap": 63,
-            "backup": 1023,
-            "data1": 511,
-            "data2": 511,
-            "data3": 511
+            "shared": 512,
+            "sap": 64,
+            "backup": 512,
+            "data1": 512,
+            "data2": 512,
+            "data3": 512
         },
-        "diskConfig_Standard_GS5": {
-            "shared": 511,
-            "sap": 63,
-            "backup": 1023,
-            "data1": 511,
-            "data2": 511,
-            "data3": 511
+        "diskConfig_Standard_DS14_v2": {
+            "shared": 256,
+            "sap": 64,
+            "backup": 256,
+            "data1": 512,
+            "data2": 512,
+            "data3": 512
         }
     },
     "resources": [
@@ -219,11 +219,11 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-shared')]",
-            "apiVersion": "2018-04-01",
+            "apiVersion": "[variables('api-version')]",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "StandardSSD_LRS",
+                "tier": "StandardSSD"
             },
             "properties": {
                 "creationData": {
@@ -235,11 +235,11 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-sap')]",
-            "apiVersion": "2018-04-01",
+            "apiVersion": "[variables('api-version')]",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "StandardSSD_LRS",
+                "tier": "StandardSSD"
             },
             "properties": {
                 "creationData": {
@@ -251,11 +251,11 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-backup1')]",
-            "apiVersion": "2018-04-01",
+            "apiVersion": "[variables('api-version')]",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "StandardSSD_LRS",
+                "tier": "StandardSSD"
             },
             "properties": {
                 "creationData": {
@@ -267,7 +267,7 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-data1')]",
-            "apiVersion": "2018-04-01",
+            "apiVersion": "[variables('api-version')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Premium_LRS",
@@ -283,7 +283,7 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-data2')]",
-            "apiVersion": "2018-04-01",
+            "apiVersion": "[variables('api-version')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Premium_LRS",
@@ -299,7 +299,7 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-data3')]",
-            "apiVersion": "2018-04-01",
+            "apiVersion": "[variables('api-version')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Premium_LRS",
@@ -315,7 +315,7 @@
         {
             "type": "Microsoft.Compute/availabilitySets",
             "name": "[parameters('AvailSetName')]",
-            "apiVersion": "2017-03-30",
+            "apiVersion": "[variables('api-version')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Aligned"

@@ -40,7 +40,7 @@ function setEnv()
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)" ]; then hanapackage="51052325"; fi
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)" ]; then hanapackage="51053061"; fi
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)" ]; then hanapackage="51053787"; fi
-  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52" ]; then hanapackage="SPS52"; fi
+  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS05 REV53" ]; then hanapackage="SPS53"; fi
 
    
   #get the VM size via the instance api
@@ -52,19 +52,15 @@ function installPackages()
   log "installPackages start"
 
   # to handle issues with SMT registration:
-  rm /etc/SUSEConnect
-  rm -f /etc/zypp/{repos,services,credentials}.d/*
-  rm -f /usr/lib/zypp/plugins/services/*
-  sed -i '/^# Added by SMT reg/,+1d' /etc/hosts
-  /usr/sbin/registercloudguest --force-new
+  #rm /etc/SUSEConnect
+  #rm -f /etc/zypp/{repos,services,credentials}.d/*
+  #rm -f /usr/lib/zypp/plugins/services/*
+  #sed -i '/^# Added by SMT reg/,+1d' /etc/hosts
+  #/usr/sbin/registercloudguest --force-new
   
-  zypper install -y glibc-2.22-51.6
-  zypper install -y systemd-228-142.1
-  zypper install -y unrar
-  zypper install -y sapconf
-  zypper install -y saptune
-  
+  zypper in -y glibc-2.22-51.6 systemd-228-142.1 unrar sapconf saptune
   zypper in -t pattern -y sap-hana
+  
   saptune solution apply HANA
   saptune daemon start
 
@@ -100,7 +96,7 @@ function createVolumes()
   mkdir /hana/backup
   mkdir /usr/sap
 
-  # this assumes that 5 disks are attached at lun 0 through 4
+  # this assumes that 6 disks are attached at lun 0 through 5
   pvcreate -ff -y /dev/disk/azure/scsi1/lun0   
   pvcreate -ff -y  /dev/disk/azure/scsi1/lun1
   pvcreate -ff -y  /dev/disk/azure/scsi1/lun2
@@ -147,8 +143,7 @@ function createVolumes()
 
   if [ $VMSIZE == "Standard_M64s" ]; then
     #this is the medium size
-    # this assumes that 6 disks are attached at lun 0 through 5
-   
+      
     pvcreate -ff -y  /dev/disk/azure/scsi1/lun6
     pvcreate -ff -y  /dev/disk/azure/scsi1/lun7
     pvcreate -ff -y /dev/disk/azure/scsi1/lun8
@@ -339,15 +334,15 @@ function prepareSAPBins()
     /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}.ZIP
     unzip ${hanapackage}.ZIP
   else
-    if [ "${hanapackage}" = "SPS52" ]
+    if [ "${hanapackage}" = "SPS53" ]
     then
       mkdir ${hanapackage}
       cd ${hanapackage}
       /usr/bin/wget --quiet $Uri/SapBits/SAPCAR
-      /usr/bin/wget --quiet $Uri/SapBits/IMDB_SERVER20_052_0-80002031.SAR
+      /usr/bin/wget --quiet $Uri/SapBits/IMDB_SERVER20_053_0-80002046.SAR
       chmod 777 SAPCAR
-      ./SAPCAR -xvf IMDB_SERVER20_052_0-80002031.SAR
-      ./SAPCAR -xvf IMDB_SERVER20_052_0-80002031.SAR SIGNATURE.SMF -manifest SIGNATURE.SMF
+      ./SAPCAR -xvf IMDB_SERVER20_053_0-80002046.SAR
+      ./SAPCAR -xvf IMDB_SERVER20_053_0-80002046.SAR SIGNATURE.SMF -manifest SIGNATURE.SMF
     else
       /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part1.exe
       /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part2.rar
@@ -383,7 +378,7 @@ function installHANA()
   
   echo $VMIPADDR $VMNAME >> /etc/hosts
   
-  if [ "${hanapackage}" = "SPS52" ]
+  if [ "${hanapackage}" = "SPS53" ]
   then
     /hana/data/sapbits/${hanapackage}/SAP_HANA_DATABASE/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
   else

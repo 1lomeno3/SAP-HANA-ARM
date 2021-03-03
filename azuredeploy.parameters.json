@@ -3,16 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "HanaVersion": {
-            "value": "SAP HANA PLATFORM EDITION 2.0 SPS05 REV52"
+            "value": "SAP HANA PLATFORM EDITION 2.0 SPS05 REV53"
         },        
         "VMName": {
-            "value": "hanaarm"
+            "value": "b1hanavm"
         },
         "HANAJumpbox": {
             "value": "no"
         },
         "VMSize": {
-            "value": "Standard_M64s (1 TB, Certified)"
+            "value": "Standard_DS14_v2 (112 GB, for B1)"
         },
         "NetworkName": {
             "value": "myVNet"
@@ -47,10 +47,10 @@
               }
         },
         "OperatingSystem": {
-            "value":  "SLES for SAP 15 SP1"
+            "value":  "SLES for SAP 15 SP2"
         },
         "HANASID": {
-            "value":  "JLT"
+            "value":  "NDB"
         },
         "HANANumber": {
             "value": "00"
