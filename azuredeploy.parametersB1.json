@@ -1,0 +1,68 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "HanaVersion": {
+            "value": "SAP HANA PLATFORM EDITION 2.0 SPS05 REV54"
+        },        
+        "VMName": {
+            "value": "b1hanavm"
+        },
+        "HANAJumpbox": {
+            "value": "no"
+        },
+        "VMSize": {
+            "value": "Standard_DS14_v2 (112 GB, for B1)"
+        },
+        "NetworkName": {
+            "value": "myVNet"
+        },
+        "addressPrefixes": {
+            "value": "10.0.0.0/16"
+        },
+        "HANASubnetName": {
+            "value": "defaultsubnet"
+        },
+        "HANASubnetPrefix": {
+            "value": "10.0.5.0/24"
+        },
+        "ManagementSubnetName": {
+            "value": "SAPMgmtSubnet"
+        },
+        "ManagementSubnetPrefix": {
+            "value": "10.0.6.0/24"
+        },
+        "customURI": {
+            "value": "https://mysapstorageaccount.blob.core.windows.net/sapmedia"            
+        },
+        "VMUserName": {
+            "value": "jatretin"
+        },
+        "VMPassword": {
+            "reference": {
+                "keyVault": {
+                "id": "/subscriptions/53495674-8c17-4e58-97e8-a0b0a0ba659d/resourceGroups/mySAPRG/providers/Microsoft.KeyVault/vaults/mySAPKeyVault"
+                },
+                "secretName": "myVMPassword"
+              }
+        },
+        "OperatingSystem": {
+            "value":  "SLES for SAP 15 SP2"
+        },
+        "HANASID": {
+            "value":  "NDB"
+        },
+        "HANANumber": {
+            "value": "00"
+        },
+        "ExistingNetworkResourceGroup": {
+            "value": "mySAPRG"
+        },
+        "IPAllocationMethod": {
+            "value": "Dynamic"
+        },
+        "StaticIP": {
+          "value":  "10.0.5.4"
+        }               
+    }
+}

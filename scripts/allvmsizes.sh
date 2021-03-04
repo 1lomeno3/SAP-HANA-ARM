@@ -36,8 +36,8 @@ function setEnv()
 
   #decode hana version parameter
   HANAVER=${HANAVER^^}
-  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS01 REV 10 (51052030)" ]; then hanapackage="51052030"; fi
-  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)" ]; then hanapackage="51052325"; fi
+  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS01 REV10 (51052030)" ]; then hanapackage="51052030"; fi
+  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS02 REV20 (51052325)" ]; then hanapackage="51052325"; fi
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)" ]; then hanapackage="51053061"; fi
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)" ]; then hanapackage="51053787"; fi
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS05 REV54" ]; then hanapackage="SPS54"; fi
