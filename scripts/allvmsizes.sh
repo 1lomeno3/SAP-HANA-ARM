@@ -40,7 +40,7 @@ function setEnv()
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS02 (51052325)" ]; then hanapackage="51052325"; fi
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS03 REV30 (51053061)" ]; then hanapackage="51053061"; fi
   if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS04 REV40 (51053787)" ]; then hanapackage="51053787"; fi
-  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS05 REV53" ]; then hanapackage="SPS53"; fi
+  if [ "${HANAVER}" = "SAP HANA PLATFORM EDITION 2.0 SPS05 REV54" ]; then hanapackage="SPS54"; fi
 
    
   #get the VM size via the instance api
@@ -334,15 +334,15 @@ function prepareSAPBins()
     /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}.ZIP
     unzip ${hanapackage}.ZIP
   else
-    if [ "${hanapackage}" = "SPS53" ]
+    if [ "${hanapackage}" = "SPS54" ]
     then
       mkdir ${hanapackage}
       cd ${hanapackage}
       /usr/bin/wget --quiet $Uri/SapBits/SAPCAR
-      /usr/bin/wget --quiet $Uri/SapBits/IMDB_SERVER20_053_0-80002046.SAR
+      /usr/bin/wget --quiet $Uri/SapBits/IMDB_SERVER20_054_0-80002031.SAR
       chmod 777 SAPCAR
-      ./SAPCAR -xvf IMDB_SERVER20_053_0-80002046.SAR
-      ./SAPCAR -xvf IMDB_SERVER20_053_0-80002046.SAR SIGNATURE.SMF -manifest SIGNATURE.SMF
+      ./SAPCAR -xvf IMDB_SERVER20_054_0-80002031.SAR
+      ./SAPCAR -xvf IMDB_SERVER20_054_0-80002031.SAR SIGNATURE.SMF -manifest SIGNATURE.SMF
     else
       /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part1.exe
       /usr/bin/wget --quiet $Uri/SapBits/${hanapackage}_part2.rar
@@ -378,7 +378,7 @@ function installHANA()
   
   echo $VMIPADDR $VMNAME >> /etc/hosts
   
-  if [ "${hanapackage}" = "SPS53" ]
+  if [ "${hanapackage}" = "SPS54" ]
   then
     /hana/data/sapbits/${hanapackage}/SAP_HANA_DATABASE/hdblcm -b --configfile /hana/data/sapbits/hdbinst-local.cfg
   else
