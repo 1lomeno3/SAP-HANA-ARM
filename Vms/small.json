@@ -127,8 +127,13 @@
         }
     },
     "variables": {
+<<<<<<< HEAD
+        "api-version-disk": "2020-09-30",
+        "api-version-vm": "2020-06-01",
+=======
         "api-version": "2020-09-30",
         "api-version-vm": "2017-12-01",
+>>>>>>> 419389b1fdc712dbf97dda8b187e6867a96ca7bf
         "mode": "Push",
         "baseUri": "https://raw.githubusercontent.com/1lomeno3/SAP-HANA-ARM/master/",
         "nicName": "[if (equals(parameters('IPAllocationMethod'),'Static'), concat(parameters('vmName'),'-static'), concat(parameters('vmName'),'-dynamic'))]",
@@ -175,7 +180,7 @@
     "resources": [
         {
             "condition": "[equals(parameters('IPAllocationMethod'), 'Dynamic')]",
-            "apiVersion": "[variables('api-version')]",
+            "apiVersion": "2020-11-01",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[concat(parameters('vmName'),'-dynamic')]",
             "location": "[resourceGroup().location]",
@@ -196,7 +201,7 @@
         },
         {
             "condition": "[equals(parameters('IPAllocationMethod'), 'Static')]",
-            "apiVersion": "[variables('api-version')]",
+            "apiVersion": "2020-11-01",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[concat(parameters('vmName'),'-static')]",
             "location": "[resourceGroup().location]",
@@ -219,7 +224,7 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-shared')]",
-            "apiVersion": "[variables('api-version')]",
+            "apiVersion": "[variables('api-version-disk')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "StandardSSD_LRS",
@@ -235,7 +240,7 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-sap')]",
-            "apiVersion": "[variables('api-version')]",
+            "apiVersion": "[variables('api-version-disk')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "StandardSSD_LRS",
@@ -251,7 +256,7 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-backup1')]",
-            "apiVersion": "[variables('api-version')]",
+            "apiVersion": "[variables('api-version-disk')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "StandardSSD_LRS",
@@ -267,7 +272,7 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-data1')]",
-            "apiVersion": "[variables('api-version')]",
+            "apiVersion": "[variables('api-version-disk')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Premium_LRS",
@@ -283,7 +288,7 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-data2')]",
-            "apiVersion": "[variables('api-version')]",
+            "apiVersion": "[variables('api-version-disk')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Premium_LRS",
@@ -299,7 +304,7 @@
         {
             "type": "Microsoft.Compute/disks",
             "name": "[concat(parameters('vmName'),'-data3')]",
-            "apiVersion": "[variables('api-version')]",
+            "apiVersion": "[variables('api-version-disk')]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Premium_LRS",
@@ -315,7 +320,7 @@
         {
             "type": "Microsoft.Compute/availabilitySets",
             "name": "[parameters('AvailSetName')]",
-            "apiVersion": "[variables('api-version')]",
+            "apiVersion": "2020-12-01",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Aligned"
