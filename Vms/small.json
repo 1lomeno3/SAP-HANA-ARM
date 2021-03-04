@@ -127,8 +127,8 @@
         }
     },
     "variables": {
-        "api-version-disk": "2020-09-30",
         "api-version-vm": "2020-06-01",
+        "api-version-disk": "2020-09-30",
         "mode": "Push",
         "baseUri": "https://raw.githubusercontent.com/1lomeno3/SAP-HANA-ARM/master/",
         "nicName": "[if (equals(parameters('IPAllocationMethod'),'Static'), concat(parameters('vmName'),'-static'), concat(parameters('vmName'),'-dynamic'))]",
