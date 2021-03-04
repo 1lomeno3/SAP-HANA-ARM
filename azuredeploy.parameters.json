@@ -12,7 +12,7 @@
             "value": "no"
         },
         "VMSize": {
-            "value": "Standard_DS14_v2 (112 GB, for B1)"
+            "value": "Standard_E32s_v3 (256 GB)"
         },
         "NetworkName": {
             "value": "myVNet"
@@ -50,7 +50,7 @@
             "value":  "SLES for SAP 15 SP2"
         },
         "HANASID": {
-            "value":  "NDB"
+            "value":  "JLT"
         },
         "HANANumber": {
             "value": "00"
