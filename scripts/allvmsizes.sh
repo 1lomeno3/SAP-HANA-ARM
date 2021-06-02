@@ -357,8 +357,8 @@ function prepareSAPBins()
       
       # had to change to azcopy due to internal SA policy
 
-      azcopy copy "$Uri/SapBits/SAPCAR?sv=2020-02-10&ss=b&srt=sco&sp=rltfx&se=2099-06-02T20:00:38Z&st=2021-06-02T12:00:38Z&spr=https&sig=h69AieiHLSWpZruwzP%2BK%2BAFmeOiTPpSwYZccd3p%2FQVI%3D" "."
-      azcopy copy "$Uri/SapBits/IMDB_SERVER20_054_0-80002031.SAR?sv=2020-02-10&ss=b&srt=sco&sp=rltfx&se=2099-06-02T20:00:38Z&st=2021-06-02T12:00:38Z&spr=https&sig=h69AieiHLSWpZruwzP%2BK%2BAFmeOiTPpSwYZccd3p%2FQVI%3D" "."
+      /usr/azcopy_linux_amd64_10.10.0/azcopy copy "$Uri/SapBits/SAPCAR?sv=2020-02-10&ss=b&srt=sco&sp=rltfx&se=2099-06-02T20:00:38Z&st=2021-06-02T12:00:38Z&spr=https&sig=h69AieiHLSWpZruwzP%2BK%2BAFmeOiTPpSwYZccd3p%2FQVI%3D" "."
+      /usr/azcopy_linux_amd64_10.10.0/azcopy copy "$Uri/SapBits/IMDB_SERVER20_054_0-80002031.SAR?sv=2020-02-10&ss=b&srt=sco&sp=rltfx&se=2099-06-02T20:00:38Z&st=2021-06-02T12:00:38Z&spr=https&sig=h69AieiHLSWpZruwzP%2BK%2BAFmeOiTPpSwYZccd3p%2FQVI%3D" "."
 
       chmod 777 SAPCAR
       ./SAPCAR -xvf IMDB_SERVER20_054_0-80002031.SAR
