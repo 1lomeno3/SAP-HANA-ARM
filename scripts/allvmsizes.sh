@@ -318,9 +318,11 @@ function azcopy()
 {
   log "azcopy start"
   
+  cd /usr/
+  
   wget -O azcopy.tar.gz https://aka.ms/downloadazcopy-v10-linux 
 	tar -xf azcopy.tar.gz
-	export PATH=$PATH:/hana/data/sapbits/azcopy_linux_amd64_10.10.0
+	export PATH=$PATH:/usr/azcopy_linux_amd64_10.10.0
 
   log "azcopy done"
 }
@@ -378,7 +380,6 @@ function installHANA()
   log "installHANA start"
 
   cd $SAPBITSDIR
-  /usr/bin/wget --quiet $Uri/SapBits/md5sums
   /usr/bin/wget --quiet "https://raw.githubusercontent.com/1lomeno3/SAP-HANA-ARM/master/hdbinst.cfg"
 
   myhost=`hostname`
