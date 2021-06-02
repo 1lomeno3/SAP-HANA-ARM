@@ -6,7 +6,7 @@
             "value": "SAP HANA PLATFORM EDITION 2.0 SPS05 REV54"
         },        
         "VMName": {
-            "value": "b1hanavm"
+            "value": "hanavm"
         },
         "HANAJumpbox": {
             "value": "no"
@@ -15,7 +15,7 @@
             "value": "Standard_E32s_v3 (256 GB)"
         },
         "NetworkName": {
-            "value": "myVNet"
+            "value": "myVNet_AE"
         },
         "addressPrefixes": {
             "value": "10.0.0.0/16"

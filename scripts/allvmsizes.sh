@@ -314,6 +314,17 @@ function createVolumes()
   log "createVolumes done"
 }
 
+function azcopy()
+{
+  log "azcopy start"
+  
+  wget -O azcopy.tar.gz https://aka.ms/downloadazcopy-v10-linux 
+	tar -xf azcopy.tar.gz
+	export PATH=$PATH:/hana/data/sapbits/azcopy_linux_amd64_10.10.0
+
+  log "azcopy done"
+}
+
 function prepareSAPBins()
 {
   log "prepareSAPBins start"
@@ -338,8 +349,15 @@ function prepareSAPBins()
     then
       mkdir ${hanapackage}
       cd ${hanapackage}
-      /usr/bin/wget --quiet $Uri/SapBits/SAPCAR
-      /usr/bin/wget --quiet $Uri/SapBits/IMDB_SERVER20_054_0-80002031.SAR
+
+      #/usr/bin/wget --quiet $Uri/SapBits/SAPCAR
+      #/usr/bin/wget --quiet $Uri/SapBits/IMDB_SERVER20_054_0-80002031.SAR
+      
+      # had to change to azcopy due to internal SA policy
+
+      azcopy copy "$Uri/SapBits/SAPCAR?sv=2020-02-10&ss=b&srt=sco&sp=rltfx&se=2099-06-02T20:00:38Z&st=2021-06-02T12:00:38Z&spr=https&sig=h69AieiHLSWpZruwzP%2BK%2BAFmeOiTPpSwYZccd3p%2FQVI%3D" "."
+      azcopy copy "$Uri/SapBits/IMDB_SERVER20_054_0-80002031.SAR?sv=2020-02-10&ss=b&srt=sco&sp=rltfx&se=2099-06-02T20:00:38Z&st=2021-06-02T12:00:38Z&spr=https&sig=h69AieiHLSWpZruwzP%2BK%2BAFmeOiTPpSwYZccd3p%2FQVI%3D" "."
+
       chmod 777 SAPCAR
       ./SAPCAR -xvf IMDB_SERVER20_054_0-80002031.SAR
       ./SAPCAR -xvf IMDB_SERVER20_054_0-80002031.SAR SIGNATURE.SMF -manifest SIGNATURE.SMF
@@ -420,6 +438,7 @@ setEnv
 installPackages
 enableSwap
 createVolumes
+azcopy
 prepareSAPBins
 installHANA
 enableBackup
